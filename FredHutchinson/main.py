@@ -23,7 +23,6 @@
 import pandas as pd
 import csv
 # We love pointers :DD
-from copy import deepcopy
 import organize
 
 # The amount of rows should never change (apart from when ic80 get concatenated to the bottom of ic50.)
@@ -130,13 +129,13 @@ def organizeData(csv):
   data = grabCSV(csv)
   data.insert(0, header)
   rows = len(data)
-  study(data, rows)
+  organize.study(data, rows)
   organize.addTreatment(data, rows)
   organize.addNullVirusID(data, rows)
   organize.addNullAssayID(data, rows)
   organize.addLab(data, rows)
   organize.addAntiBody(data)
-  FINALdata = addPoscrit(data, rows)
+  FINALdata = organize.addPoscrit(data, rows)
 
   
   return FINALdata
@@ -164,14 +163,14 @@ def findAntiIndex(CSV):
   for i in range(len(CSV[0])):
 
     # if finds number (knows that it is a antibody)
-    if hasNumbers(CSV[0][i]):
+    if organize.hasNumbers(CSV[0][i]):
       return i
       
 def findAntiName(CSV):
   for i in range(len(CSV[0])):
 
     # if finds number (knows that it is a antibody)
-    if hasNumbers(CSV[0][i]):
+    if organize.hasNumbers(CSV[0][i]):
       return CSV[0][i]
 
 def firstIC80(CSV):

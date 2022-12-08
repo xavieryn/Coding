@@ -1,3 +1,6 @@
+from copy import deepcopy
+
+
 def addTreatment(data, rows):
   # asks for treatment like Placebo or VRC01, and will add the treatment to each row
   treatment = input("Enter the treatment: ")
