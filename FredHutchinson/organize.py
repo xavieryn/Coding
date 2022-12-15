@@ -62,6 +62,7 @@ def addAntiBody(data):
       #adds all antibody names to the actual header
       for j in range(i, (len(data[1]))):
         data[0].append(data[1][j])
+        print(data[0])
       #deletes the unneeded row
       del data[1]
       break

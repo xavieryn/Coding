@@ -23,7 +23,6 @@
 import pandas as pd
 import csv
 import organize
-import os
 
 # The amount of rows should never change (apart from when ic80 get concatenated to the bottom of ic50.)
 
@@ -40,9 +39,9 @@ def main():
     # IN THE FUTURE, ask for user input for the new CSV they would like to add
     
     # grab temp csv and convert back into array
-    oldCSV = grabCSV('CSV/temp.csv')
+    oldCSV = grabCSV('CSV/ProbBroken.csv')
     #grab new csv inputted by user, then add onto temp array
-    grabnewCSV = 'CSV/HVTN_704_Real.csv'
+    grabnewCSV = 'CSV/HVTN_704_Edit2.csv'
     newCSV = grabCSV(grabnewCSV)
     
     # see if temp csv and new csv are from the same study (703 or 704)
@@ -76,17 +75,16 @@ def main():
           
           # IT COMPLETELY KILLED MY GRAPH
           # FIGURE THIS OUT 
-          print ( oldCSV[0][mainA] + ' vs ' + newOrgCSV[0][newA])
+          #print ( oldCSV[0][mainA] + ' vs ' + newOrgCSV[0][newA])
           if oldCSV[0][mainA] == newOrgCSV[0][newA]:
-            print("We are in")
             sameAntiBody = True 
         # Once it starts iterating through the graph it breaks!!!!
         if sameAntiBody:
           for rows in range(1, len(newOrgCSV)):
               #insert the new antibody into row of main antibody
               #newOrgCSV.insert(mainA, newOrgCSV[0][newA])
-              print(newOrgCSV[rows])
-              #
+              #print(newOrgCSV[rows])
+              
               convertCSV(newOrgCSV)
           sameAntiBody = False
         else: 
@@ -144,7 +142,7 @@ def organizeData(csv):
 # converts code into CSV
 def convertCSV(data):
   dataframe_array = pd.DataFrame(data)
-  dataframe_array.to_csv('CSV/temp.csv', index=False)
+  dataframe_array.to_csv('CSV/FINALDATA.csv', index=False)
 
 # Adding other csv will be very difficult
 def grabCSV( name ):
