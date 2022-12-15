@@ -42,7 +42,7 @@ def main():
     # grab temp csv and convert back into array
     oldCSV = grabCSV('CSV/temp.csv')
     #grab new csv inputted by user, then add onto temp array
-    grabnewCSV = 'CSV/220708_Edit.csv'
+    grabnewCSV = 'CSV/HVTN_704_Real.csv'
     newCSV = grabCSV(grabnewCSV)
     
     # see if temp csv and new csv are from the same study (703 or 704)
