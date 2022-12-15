@@ -20,14 +20,24 @@
 # Next Steps
 # Work on a simple and effective interface
 
-import pandas as pd
-import csv
-import organize
 
 # The amount of rows should never change (apart from when ic80 get concatenated to the bottom of ic50.)
 
 # The only column changes that should be made are the additions of new antibodies.
 # When there is a new column, append the name of the antibody to the header.
+
+import pandas as pd
+import csv
+import glob
+import Organize
+
+# FILE PATHS WITH GLOB
+path = 'CSV'
+allFiles = glob.glob(path+ '/*.csv')
+
+print(allFiles)
+print(glob.glob(path +'/*.csv'))
+  
 
 def main():
   
@@ -47,10 +57,7 @@ def main():
     # see if temp csv and new csv are from the same study (703 or 704)
 
     # They are from the same study
-    #print ("oldCSV[1][0]:" + oldCSV[1][3] + " vs. NewCSV[1][0]: " + newCSV[1][0] )
-    #print(  str(len(oldCSV)) + " VS. " + str(len(newCSV))) 
-    # if first virus is equal to each other, then data is from the same study
-    # THIS WORKS :DDD, randomly adds another num column, figure out how to delete because there are two 
+    # if first virus is equal to each other, then data is from the same study, but just with different antibodies tested 
     if oldCSV[1][3] == newCSV[1][0]:
       # Add ic50 antibody numbers to main dataset
       for column in range(findAntiIndex(newCSV), firstIC80(newCSV)):
@@ -110,13 +117,6 @@ def main():
             
       
             
-     
-        
-    # if they are from the same study, then you only need to add new columns for new antibodies
-
-    # if they are from different studies you will have to add new rows and columns for both viruses and antibodies
-
-
 # Functions
 
 def organizeData(csv):
@@ -126,13 +126,13 @@ def organizeData(csv):
   data = grabCSV(csv)
   data.insert(0, header)
   rows = len(data)
-  organize.study(data, rows)
-  organize.addTreatment(data, rows)
-  organize.addNullVirusID(data, rows)
-  organize.addNullAssayID(data, rows)
-  organize.addLab(data, rows)
-  organize.addAntiBody(data)
-  FINALdata = organize.addPoscrit(data, rows)
+  Organize.study(data, rows)
+  Organize.addTreatment(data, rows)
+  Organize.addNullVirusID(data, rows)
+  Organize.addNullAssayID(data, rows)
+  Organize.addLab(data, rows)
+  Organize.addAntiBody(data)
+  FINALdata = Organize.addPoscrit(data, rows)
 
   
   return FINALdata
@@ -160,14 +160,14 @@ def findAntiIndex(CSV):
   for i in range(len(CSV[0])):
 
     # if finds number (knows that it is a antibody)
-    if organize.hasNumbers(CSV[0][i]):
+    if Organize.hasNumbers(CSV[0][i]):
       return i
       
 def findAntiName(CSV):
   for i in range(len(CSV[0])):
 
     # if finds number (knows that it is a antibody)
-    if organize.hasNumbers(CSV[0][i]):
+    if Organize.hasNumbers(CSV[0][i]):
       return CSV[0][i]
 
 def firstIC80(CSV):
