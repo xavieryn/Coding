@@ -22,8 +22,8 @@
 
 import pandas as pd
 import csv
-# We love pointers :DD
 import organize
+import os
 
 # The amount of rows should never change (apart from when ic80 get concatenated to the bottom of ic50.)
 
@@ -32,7 +32,7 @@ import organize
 
 def main():
   
-  FINALdata = organizeData('220801_Edit.csv')
+  FINALdata = organizeData('CSV/220801_Edit.csv')
   convertCSV(FINALdata)
 
   add = input('Would you like to add more CSVs? (y or n)? ')
@@ -40,9 +40,9 @@ def main():
     # IN THE FUTURE, ask for user input for the new CSV they would like to add
     
     # grab temp csv and convert back into array
-    oldCSV = grabCSV('temp.csv')
+    oldCSV = grabCSV('CSV/temp.csv')
     #grab new csv inputted by user, then add onto temp array
-    grabnewCSV = '220708_Edit.csv'
+    grabnewCSV = 'CSV/220708_Edit.csv'
     newCSV = grabCSV(grabnewCSV)
     
     # see if temp csv and new csv are from the same study (703 or 704)
@@ -88,7 +88,6 @@ def main():
               print(newOrgCSV[rows])
               #
               convertCSV(newOrgCSV)
-              #del newOrgCSV[rows][newA + 1 ]
           sameAntiBody = False
         else: 
           for rows in range(1, len(newOrgCSV)):
@@ -108,7 +107,7 @@ def main():
       #for newantibody
       # combine csvs and turn into new file :D
       combinedCSV = oldCSV + newOrgCSV
-      #convertCSV(combinedCSV)
+      convertCSV(combinedCSV)
 
             
       
@@ -145,7 +144,7 @@ def organizeData(csv):
 # converts code into CSV
 def convertCSV(data):
   dataframe_array = pd.DataFrame(data)
-  dataframe_array.to_csv('temp.csv', index=False)
+  dataframe_array.to_csv('CSV/temp.csv', index=False)
 
 # Adding other csv will be very difficult
 def grabCSV( name ):

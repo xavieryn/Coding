@@ -103,7 +103,7 @@ def addPoscrit(data, rows):
   for i in range(len(tempData)):
 
     del tempData[i][6:ic80First]
-    tempData[i].insert(6, "%80")
+    tempData[i].insert(6, "80%")
 
   # Delete the headers that were once ic80
   del data[0][ic80First + 1:len(data[0])]
