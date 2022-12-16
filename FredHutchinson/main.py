@@ -38,52 +38,46 @@ allFiles = glob.glob(path+ '/*.csv')
 print(allFiles)
 print(glob.glob(path +'/*.csv'))
   
-
+# FIGURE OUT WHAT FILE I NEEEEEED TO CLOSEEEEE
+# https://stackoverflow.com/questions/62287259/csv-file-not-updating-until-script-is-terminated-when-continuously-appending-fil
 def main():
   
-  FINALdata = organizeData('CSV/220801_Edit.csv')
-  convertCSV(FINALdata)
-
-  add = input('Would you like to add more CSVs? (y or n)? ')
-  if add == 'y':
-    # IN THE FUTURE, ask for user input for the new CSV they would like to add
-    
-    # grab temp csv and convert back into array
-    oldCSV = grabCSV('CSV/ProbBroken.csv')
-    #grab new csv inputted by user, then add onto temp array
-    grabnewCSV = 'CSV/HVTN_704_Edit2.csv'
-    newCSV = grabCSV(grabnewCSV)
-    
-    # see if temp csv and new csv are from the same study (703 or 704)
-
-    # They are from the same study
+  finalData = organizeData(allFiles[0])
+  
+  for csv in range(1, len(allFiles)):
+    if csv > 1:
+      finalData = grabCSV('OrganizeCSV/FINALDATA')
+    # NEED TO UPDATE FINAL DATA, SO THAT THE CSV CAN APPEND
+    grabTempData = (allFiles[csv])
+    tempData = grabCSV(grabTempData)
+     # They are from the same study
     # if first virus is equal to each other, then data is from the same study, but just with different antibodies tested 
-    if oldCSV[1][3] == newCSV[1][0]:
+    if finalData[1][3] == tempData[1][0]:
       # Add ic50 antibody numbers to main dataset
-      for column in range(findAntiIndex(newCSV), firstIC80(newCSV)):
-        for row in range (0, len(newCSV)):
-            oldCSV[row].append(newCSV[row][column])
+      for column in range(findAntiIndex(tempData), firstIC80(tempData)):
+        for row in range (0, len(tempData)):
+            finalData[row].append(tempData[row][column])
             
       # Add ic80 antibody numbers to main dataset
-      for column in range(firstIC80(newCSV), len(newCSV[0])):
-        for row in range (1 , len(newCSV)):
-            oldCSV[row + len(newCSV) -1].append(newCSV[row][column])
+      for column in range(firstIC80(tempData), len(tempData[0])):
+        for row in range (1 , len(tempData)):
+            finalData[row + len(tempData) -1].append(tempData[row][column])
       
-      convertCSV(oldCSV)
-      
-    #They are not from the same study
+      convertCSV(finalData)
+
+     #They are not from the same study
     else:
       # same CSV as new CSV
-      newOrgCSV = organizeData(grabnewCSV)
+      newOrgCSV = organizeData(grabTempData)
             
-      for mainA in range(7, len(oldCSV[0])):
+      for mainA in range(7, len(finalData[0])):
         sameAntiBody = False
         for newA in range(7, len(newOrgCSV[0])):
           
           # IT COMPLETELY KILLED MY GRAPH
           # FIGURE THIS OUT 
-          #print ( oldCSV[0][mainA] + ' vs ' + newOrgCSV[0][newA])
-          if oldCSV[0][mainA] == newOrgCSV[0][newA]:
+          #print ( finalData[0][mainA] + ' vs ' + newOrgCSV[0][newA])
+          if finalData[0][mainA] == newOrgCSV[0][newA]:
             sameAntiBody = True 
         # Once it starts iterating through the graph it breaks!!!!
         if sameAntiBody:
@@ -101,18 +95,24 @@ def main():
       #I am lazy
       for newA in range (7, len(newOrgCSV[0])):
         sameAntiBody = False
-        for mainA in range(7, len(oldCSV[0])):
-          if oldCSV[0][mainA] == newOrgCSV[0][newA]:
+        for mainA in range(7, len(finalData[0])):
+          if finalData[0][mainA] == newOrgCSV[0][newA]:
             sameAntiBody = True
         if not sameAntiBody:
-          oldCSV[0].append(newOrgCSV[0][newA])
+          finalData[0].append(newOrgCSV[0][newA])
       #delete unneeded header
       del newOrgCSV[0]
+      #Put newData ontop of old data
+      newOrgCSV.insert(0,finalData[0])
+      del finalData[0]
 
       #for newantibody
       # combine csvs and turn into new file :D
-      combinedCSV = oldCSV + newOrgCSV
+      combinedCSV = newOrgCSV + finalData
       convertCSV(combinedCSV)
+
+
+
 
             
       
@@ -141,8 +141,9 @@ def organizeData(csv):
 
 # converts code into CSV
 def convertCSV(data):
+  finalFileName = 'OrganizeCSV/FINALDATA.csv'
   dataframe_array = pd.DataFrame(data)
-  dataframe_array.to_csv('CSV/FINALDATA.csv', index=False)
+  dataframe_array.to_csv(finalFileName, index=False)
 
 # Adding other csv will be very difficult
 def grabCSV( name ):
