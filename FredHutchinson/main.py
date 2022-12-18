@@ -123,9 +123,15 @@ def main():
 # Functions
 
 def addNA(finalData):
-  for i in range(finalData):
-    for j in range(finalData):
-      if finalData
+  for i in range(len(finalData)):
+    for j in range(len(finalData[i])):
+      if finalData[i][j] == '':
+        finalData[i][j] = 'N/A'
+    while len(finalData[i]) < len(finalData[0]):
+      finalData[i].append('N/A')
+
+
+
 def organizeData(csv):
   header = [
   'Study', 'Treatment', 'Virus', 'VirusID', 'AssayID', 'Lab', 'Poscrit'
