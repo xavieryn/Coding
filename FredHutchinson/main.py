@@ -37,19 +37,16 @@ allFiles = glob.glob(path+ '/*.csv')
 
 print(allFiles)
 print(glob.glob(path +'/*.csv'))
-  
-# FIGURE OUT WHAT FILE I NEEEEEED TO CLOSEEEEE
-# https://stackoverflow.com/questions/62287259/csv-file-not-updating-until-script-is-terminated-when-continuously-appending-fil
+
 def main():
   
   finalData = organizeData(allFiles[0])
   
   for csv in range(1, len(allFiles)):
     
-    # NEED TO UPDATE FINAL DATA, SO THAT THE CSV CAN APPEND
     grabTempData = (allFiles[csv])
     tempData = grabCSV(grabTempData)
-     # They are from the same study
+    # They are from the same study
     # if first virus is equal to each other, then data is from the same study, but just with different antibodies tested 
     if finalData[1][3] == tempData[1][0]:
       # Add ic50 antibody numbers to main dataset
@@ -62,36 +59,38 @@ def main():
         for row in range (1 , len(tempData)):
             finalData[row + len(tempData) -1].append(tempData[row][column])
       
-      #convertCSV(finalData)
 
-     #They are not from the same study
+    
+    #They are not from the same study
     else:
       # same CSV as new CSV
       newOrgCSV = organizeData(grabTempData)
-            
+
+      #Starts from first antibody      
       for mainA in range(7, len(finalData[0])):
         sameAntiBody = False
+        # Look for if the two column's are the same antibody
         for newA in range(7, len(newOrgCSV[0])):
           
-          # IT COMPLETELY KILLED MY GRAPH
-          # FIGURE THIS OUT 
-          #print ( finalData[0][mainA] + ' vs ' + newOrgCSV[0][newA])
           if finalData[0][mainA] == newOrgCSV[0][newA]:
             sameAntiBody = True 
-        # Once it starts iterating through the graph it breaks!!!!
         if sameAntiBody:
           for rows in range(1, len(newOrgCSV)):
               #insert the new antibody into row of main antibody
               #newOrgCSV.insert(mainA, newOrgCSV[0][newA])
-              #print(newOrgCSV[rows])
               
+              #IDK WHY THIS IS WORKING 
+              print('We are in here')
+              print(newOrgCSV[0][newA])
               convertCSV(newOrgCSV)
           sameAntiBody = False
         else: 
           for rows in range(1, len(newOrgCSV)):
             #insert the new antibody into row of main antibody
             newOrgCSV[rows].insert(mainA, 'N/A')
-      #I am lazy
+      
+      
+      # See if the antibody is new and if it is, then add to header   
       for newA in range (7, len(newOrgCSV[0])):
         sameAntiBody = False
         for mainA in range(7, len(finalData[0])):
@@ -122,11 +121,13 @@ def main():
             
 # Functions
 
+# Adds N/A to every empty cell
 def addNA(finalData):
   for i in range(len(finalData)):
     for j in range(len(finalData[i])):
       if finalData[i][j] == '':
         finalData[i][j] = 'N/A'
+    # Append N/A to array until it is the same length as header 
     while len(finalData[i]) < len(finalData[0]):
       finalData[i].append('N/A')
 
