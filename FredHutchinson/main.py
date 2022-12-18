@@ -45,8 +45,7 @@ def main():
   finalData = organizeData(allFiles[0])
   
   for csv in range(1, len(allFiles)):
-    if csv > 1:
-      finalData = grabCSV('OrganizeCSV/FINALDATA')
+    
     # NEED TO UPDATE FINAL DATA, SO THAT THE CSV CAN APPEND
     grabTempData = (allFiles[csv])
     tempData = grabCSV(grabTempData)
@@ -63,7 +62,7 @@ def main():
         for row in range (1 , len(tempData)):
             finalData[row + len(tempData) -1].append(tempData[row][column])
       
-      convertCSV(finalData)
+      #convertCSV(finalData)
 
      #They are not from the same study
     else:
@@ -108,17 +107,25 @@ def main():
 
       #for newantibody
       # combine csvs and turn into new file :D
-      combinedCSV = newOrgCSV + finalData
-      convertCSV(combinedCSV)
+      finalData = newOrgCSV + finalData
+      #convertCSV(combinedCSV)
+
+
+  addNA(finalData)
+  convertCSV(finalData)
 
 
 
 
             
-      
+
             
 # Functions
 
+def addNA(finalData):
+  for i in range(finalData):
+    for j in range(finalData):
+      if finalData
 def organizeData(csv):
   header = [
   'Study', 'Treatment', 'Virus', 'VirusID', 'AssayID', 'Lab', 'Poscrit'
