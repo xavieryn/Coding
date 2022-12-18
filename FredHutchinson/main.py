@@ -80,9 +80,9 @@ def main():
               #newOrgCSV.insert(mainA, newOrgCSV[0][newA])
               
               #IDK WHY THIS IS WORKING 
+              #THIS SHOULD NOT WORK BUT IT IS   
               print('We are in here')
               print(newOrgCSV[0][newA])
-              convertCSV(newOrgCSV)
           sameAntiBody = False
         else: 
           for rows in range(1, len(newOrgCSV)):
@@ -112,11 +112,6 @@ def main():
 
   addNA(finalData)
   convertCSV(finalData)
-
-
-
-
-            
 
             
 # Functions
