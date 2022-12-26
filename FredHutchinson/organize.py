@@ -44,6 +44,9 @@ def addNullAssayID(data, rows):
 
 def study(data, rows):
   for i in range(1, rows):
+    index = data[i][0]
+    searchStudy = index.find('70')
+    study = index[searchStudy - 1:searchStudy + 3 ]
     
     data[i].insert(0, study)
 

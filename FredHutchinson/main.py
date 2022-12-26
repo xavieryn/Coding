@@ -14,17 +14,9 @@
 
 # CHANGE EXCEL FILE TO CSV
 
-# In the future, there will be a better interface, so user can choose what functions to use.
-
 # Fuzzy matching will be thought about in the future
 # Next Steps
 # Work on a simple and effective interface
-
-
-# The amount of rows should never change (apart from when ic80 get concatenated to the bottom of ic50.)
-
-# The only column changes that should be made are the additions of new antibodies.
-# When there is a new column, append the name of the antibody to the header.
 
 import pandas as pd
 import csv
@@ -107,7 +99,6 @@ def main():
       #for newantibody
       # combine csvs and turn into new file :D
       finalData = newOrgCSV + finalData
-      #convertCSV(combinedCSV)
 
 
   addNA(finalData)
@@ -115,19 +106,6 @@ def main():
 
             
 # Functions
-
-# Adds N/A to every empty cell
-def addNA(finalData):
-  for i in range(len(finalData)):
-    for j in range(len(finalData[i])):
-      if finalData[i][j] == '':
-        finalData[i][j] = 'N/A'
-    # Append N/A to array until it is the same length as header 
-    while len(finalData[i]) < len(finalData[0]):
-      finalData[i].append('N/A')
-
-
-
 def organizeData(csv):
   header = [
   'Study', 'Treatment', 'Virus', 'VirusID', 'AssayID', 'Lab', 'Poscrit'
@@ -146,8 +124,6 @@ def organizeData(csv):
   
   return FINALdata
   
-
-
 # converts code into CSV
 def convertCSV(data):
   finalFileName = 'OrganizeCSV/FINALDATA.csv'
@@ -189,5 +165,19 @@ def firstIC80(CSV):
       break
   
   return ic80First
+
+# Adds N/A to every empty cell
+def addNA(finalData):
+  for i in range(len(finalData)):
+    for j in range(len(finalData[i])):
+      if finalData[i][j] == '':
+        finalData[i][j] = 'N/A'
+    # Append N/A to array until it is the same length as header 
+    while len(finalData[i]) < len(finalData[0]):
+      finalData[i].append('N/A')
+
+
+
+
 if __name__ == '__main__':
   main()
