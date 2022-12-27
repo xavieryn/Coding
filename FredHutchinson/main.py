@@ -66,17 +66,7 @@ def main():
           
           if finalData[0][mainA] == newOrgCSV[0][newA]:
             sameAntiBody = True 
-        if sameAntiBody:
-          for rows in range(1, len(newOrgCSV)):
-              #insert the new antibody into row of main antibody
-              #newOrgCSV.insert(mainA, newOrgCSV[0][newA])
-              
-              #IDK WHY THIS IS WORKING 
-              #THIS SHOULD NOT WORK BUT IT IS   
-              print('WE ARE IN HERE')
-              #print(newOrgCSV[0][newA])
-          sameAntiBody = False
-        else: 
+        if not sameAntiBody: 
           for rows in range(1, len(newOrgCSV)):
             #insert the new antibody into row of main antibody
             newOrgCSV[rows].insert(mainA, 'N/A')
