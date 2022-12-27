@@ -16,7 +16,7 @@
 
 # Fuzzy matching will be thought about in the future
 # Next Steps
-# Work on a simple and effective interface
+# Work on a simple and effective interface 
 
 import pandas as pd
 import csv
@@ -73,8 +73,8 @@ def main():
               
               #IDK WHY THIS IS WORKING 
               #THIS SHOULD NOT WORK BUT IT IS   
-              print('We are in here')
-              print(newOrgCSV[0][newA])
+              print('WE ARE IN HERE')
+              #print(newOrgCSV[0][newA])
           sameAntiBody = False
         else: 
           for rows in range(1, len(newOrgCSV)):
