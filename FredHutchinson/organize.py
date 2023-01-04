@@ -1,16 +1,17 @@
 from copy import deepcopy
 
 
-def addTreatment(data, rows):
+def addTreatment(data, rows, name):
   # asks for treatment like Placebo or VRC01, and will add the treatment to each row
-  treatment = input("Enter the treatment: ")
+  #print('File Name: ' + name)
+  treatment = input('Enter the treatment: ')
   for i in range(1, rows):
     data[i].insert(1, treatment)
 
 
 def addLab(data, rows):
   #asks for lab name and will add the lab to each row
-  labName = input("Enter lab name: ")
+  labName = input('Enter lab name: ')
   for i in range(1, rows):
     data[i].insert(5, labName)
 
@@ -26,20 +27,21 @@ def addNullVirusID(data, rows):
       break
   if not ID:
     for i in range(1, rows):
-      data[i].insert(3, 'N/A')
+      data[i].insert(3, None)
 
 
 def addNullAssayID(data, rows):
   ID = False
   for i in range(len(data[1])):
     #  data[1] is the header row
-    if data[1][i].upper().find('ASSAY ID') != -1:
-      ID = True
-      break
+    if data[1][i] != None:
+      if data[1][i].upper().find('ASSAY ID') != -1:
+        ID = True
+        break
   # If there is no virus ID, add N/A
   if not ID:
     for i in range(1, rows):
-      data[i].insert(4, 'N/A')
+      data[i].insert(4, None)
 
 
 def study(data, rows):
@@ -57,15 +59,16 @@ def addAntiBody(data):
   for i in range(len(data[1])):
 
     # if finds number (knows that it is a antibody), then adds to antibody to data
-    if hasNumbers(data[1][i]):
+    if data[1][i] != None:
+      if hasNumbers(data[1][i]):
 
-      #adds all antibody names to the actual header
-      for j in range(i, (len(data[1]))):
-        data[0].append(data[1][j])
-        print(data[0])
-      #deletes the unneeded row
-      del data[1]
-      break
+        #adds all antibody names to the actual header
+        for j in range(i, (len(data[1]))):
+          data[0].append(data[1][j])
+          #print(data[0])
+        #deletes the unneeded row
+        del data[1]
+        break
 
 
 def hasNumbers(inputString):

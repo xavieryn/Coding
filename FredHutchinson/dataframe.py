@@ -8,12 +8,11 @@ def main():
   ]
   df = pd.read_csv('CSV/220708_Edit.csv')
 
-  print(df.columns)
-  print(len(df.index))
+  #print(df.columns)
+  #print(len(df.index))
   df.columns = df.iloc[0]
   df = df[1:]
-  print(df.columns)
-  print(len(df.index))
+  
   
   study(df)
   addTreatment(df)
@@ -21,7 +20,7 @@ def main():
   addNullVirusID(df, df.columns)
   addNullAssayID(df, df.columns)
 
-  print(df)
+ 
 
 def study(data):
   virusName = data.loc[1][0]

@@ -27,8 +27,8 @@ import Organize
 path = 'CSV'
 allFiles = glob.glob(path+ '/*.csv')
 
-print(allFiles)
-print(glob.glob(path +'/*.csv'))
+#print(allFiles)
+#print(glob.glob(path +'/*.csv'))
 
 def main():
   
@@ -69,7 +69,7 @@ def main():
         if not sameAntiBody: 
           for rows in range(1, len(newOrgCSV)):
             #insert the new antibody into row of main antibody
-            newOrgCSV[rows].insert(mainA, 'N/A')
+            newOrgCSV[rows].insert(mainA, None)
       
       
       # See if the antibody is new and if it is, then add to header   
@@ -104,7 +104,7 @@ def organizeData(csv):
   data.insert(0, header)
   rows = len(data)
   Organize.study(data, rows)
-  Organize.addTreatment(data, rows)
+  Organize.addTreatment(data, rows, csv)
   Organize.addNullVirusID(data, rows)
   Organize.addNullAssayID(data, rows)
   Organize.addLab(data, rows)
@@ -117,8 +117,13 @@ def organizeData(csv):
 # converts code into CSV
 def convertCSV(data):
   finalFileName = 'OrganizeCSV/FINALDATA.csv'
-  dataframe_array = pd.DataFrame(data)
-  dataframe_array.to_csv(finalFileName, index=False)
+  dataframe = pd.DataFrame(data)
+  dataframe.to_csv(finalFileName, index=False, header=False)
+
+  dataframe.applymap(lambda x: x.replace('<','') if x != None else x)
+  dataframe.applymap(lambda x: x.replace('>','') if x != None else x)
+
+  print(dataframe.mean(skipna=True, axis = 0, numeric_only=True))
 
 # Adding other csv will be very difficult
 def grabCSV( name ):
@@ -161,10 +166,10 @@ def addNA(finalData):
   for i in range(len(finalData)):
     for j in range(len(finalData[i])):
       if finalData[i][j] == '':
-        finalData[i][j] = 'N/A'
+        finalData[i][j] = None
     # Append N/A to array until it is the same length as header 
     while len(finalData[i]) < len(finalData[0]):
-      finalData[i].append('N/A')
+      finalData[i].append(None)
 
 
 
