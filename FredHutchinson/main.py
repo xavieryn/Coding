@@ -125,12 +125,12 @@ def convertCSV(data):
   #remove first row from DataFrame
   dataframe = dataframe[1:]
 
-  dataframe = dataframe.applymap(lambda x: x.replace('<','') if x != None and type(x) != str else x)
-  dataframe = dataframe.applymap(lambda x: x.replace('>','') if x != None and type(x) != str else x)
+  dataframe = dataframe.applymap(lambda x: x.replace('<','') if x != None else x)
+  dataframe = dataframe.applymap(lambda x: x.replace('>','') if x != None else x)
   print(dataframe.head((1)))
   dataframe['VRC34.01'] = dataframe['VRC34.01'].astype(float)
 
-  print(dataframe['VRC34.01'].max(skipna=True))
+  print(dataframe['VRC34.01'].mean(skipna=True))
   dataframe.to_csv(finalFileName, index=False, header=False, date_format=False)
 # Adding other csv will be very difficult
 def grabCSV( name ):
