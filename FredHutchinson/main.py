@@ -116,15 +116,22 @@ def organizeData(csv):
   
 # converts code into CSV
 def convertCSV(data):
-  finalFileName = 'OrganizeCSV/FINALDATA.csv'
+  finalFileName = 'OrganizeCSV/FINALDATAWITHOUTSIGNS.csv'
   dataframe = pd.DataFrame(data)
-  dataframe.to_csv(finalFileName, index=False, header=False)
+  dataframe.to_csv(finalFileName, index=False, header=False, date_format=False)
+  
+  #set column names equal to values in row index position 0
+  dataframe.columns = dataframe.iloc[0]
+  #remove first row from DataFrame
+  dataframe = dataframe[1:]
 
-  dataframe.applymap(lambda x: x.replace('<','') if x != None else x)
-  dataframe.applymap(lambda x: x.replace('>','') if x != None else x)
+  dataframe = dataframe.applymap(lambda x: x.replace('<','') if x != None and type(x) != str else x)
+  dataframe = dataframe.applymap(lambda x: x.replace('>','') if x != None and type(x) != str else x)
+  print(dataframe.head((1)))
+  dataframe['VRC34.01'] = dataframe['VRC34.01'].astype(float)
 
-  print(dataframe.mean(skipna=True, axis = 0, numeric_only=True))
-
+  print(dataframe['VRC34.01'].max(skipna=True))
+  dataframe.to_csv(finalFileName, index=False, header=False, date_format=False)
 # Adding other csv will be very difficult
 def grabCSV( name ):
   with open(name, encoding='utf8', errors='ignore') as f:
